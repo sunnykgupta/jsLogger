@@ -1,7 +1,7 @@
 window.console=(function(origConsole){
 
-    if(!window.console)
-      console = {};
+    if(!window.console || !origConsole)
+      origConsole = {};
     var isDebug=false,
     logArray = {
       logs: [],
