@@ -1,36 +1,48 @@
-window.console=(function(origConsole){
+window.console = (function (origConsole) {
 
-    if(!window.console || !origConsole)
-      origConsole = {};
-    var isDebug=false,
-    logArray = {
-      logs: [],
-      errors: [],
-      warns: [],
-      infos: []
+    if (!window.console || !origConsole) {
+        origConsole = {};
     }
+
+    var isDebug = false, isSaveLog = false,
+        logArray = {
+            logs: [],
+            errors: [],
+            warns: [],
+            infos: []
+        };
+
     return {
-        log: function(){
-          logArray.logs.push(arguments)
-          isDebug && origConsole.log && origConsole.log.apply(origConsole,arguments);
+        log: function () {
+            this.addLog(arguments);
+            isDebug && origConsole.log && origConsole.log.apply(origConsole, arguments);
         },
-        warn: function(){
-          logArray.warns.push(arguments)
-          isDebug && origConsole.warn && origConsole.warn.apply(origConsole,arguments);
+        warn: function () {
+            this.addLog(arguments);
+            isDebug && origConsole.warn && origConsole.warn.apply(origConsole, arguments);
         },
-        error: function(){
-          logArray.errors.push(arguments)
-          isDebug && origConsole.error && origConsole.error.apply(origConsole,arguments);
+        error: function () {
+            this.addLog(arguments);
+            isDebug && origConsole.error && origConsole.error.apply(origConsole, arguments);
         },
-        info: function(v){
-          logArray.infos.push(arguments)
-          isDebug && origConsole.info && origConsole.info.apply(origConsole,arguments);
+        info: function (v) {
+            this.addLog(arguments);
+            isDebug && origConsole.info && origConsole.info.apply(origConsole, arguments);
         },
-        debug: function(bool){
-          isDebug = bool;
+        debug: function (bool) {
+            isDebug = bool;
         },
-        logArray: function(){
-          return logArray;
+        saveLog: function (bool) {
+            isSaveLog = bool;
+        },
+        addLog: function (arguments) {
+            if (!isSaveLog) {
+                return;
+            }
+            logArray.logs.push(arguments);
+        },
+        logArray: function () {
+            return logArray;
         }
     };
 
