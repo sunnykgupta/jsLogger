@@ -18,11 +18,11 @@ window.console = (function (origConsole) {
             isDebug && origConsole.log && origConsole.log.apply(origConsole, arguments);
         },
         warn: function () {
-            this.addLog(arguments, "errors");
+            this.addLog(arguments, "warns");
             isDebug && origConsole.warn && origConsole.warn.apply(origConsole, arguments);
         },
         error: function () {
-            this.addLog(arguments, "warns");
+            this.addLog(arguments, "errors");
             isDebug && origConsole.error && origConsole.error.apply(origConsole, arguments);
         },
         info: function (v) {
